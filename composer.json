@@ -1,0 +1,23 @@
+{
+    "name": "ldtech/omnipay-aypay",
+    "description": "omnipay-aypay",
+    "type": "library",
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kuangjy2",
+            "email": "kuangjy@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\AyPay\\": "src/"
+        }
+    },
+}
