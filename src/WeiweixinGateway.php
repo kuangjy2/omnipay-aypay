@@ -3,7 +3,7 @@
 namespace Omnipay\AyPay;
 
 /**
- * Class Cibwxh5Gateway
+ * Class WeiweixinGateway
  * @package Omnipay\AyPay
  */
 class WeiweixinGateway extends BaseAbstractGateway

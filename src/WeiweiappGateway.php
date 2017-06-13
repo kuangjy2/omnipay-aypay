@@ -3,20 +3,20 @@
 namespace Omnipay\AyPay;
 
 /**
- * Class WeialipayGateway
+ * Class WeiweiappGateway
  * @package Omnipay\AyPay
  */
-class WeialipayGateway extends BaseAbstractGateway
+class WeiweiappGateway extends BaseAbstractGateway
 {
 
     public function getName()
     {
-        return 'AyPay Weialipay';
+        return 'AyPay Weiweixin';
     }
 
 
     public function getService()
     {
-        return 'Weialipay';
+        return 'weiweiapp';
     }
 }
