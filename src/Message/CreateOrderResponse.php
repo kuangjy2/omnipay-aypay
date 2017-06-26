@@ -28,4 +28,16 @@ class CreateOrderResponse extends BaseAbstractResponse
 
         return $data;
     }
+
+    public function getTokenId()
+    {
+        if ($this->isSuccessful()) {
+            $data = $this->getData();
+            $data = str_replace("{xml}", "&", $data['token_id']);
+        } else {
+            $data = null;
+        }
+
+        return $data;
+    }
 }
