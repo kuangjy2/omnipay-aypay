@@ -40,4 +40,11 @@ class CreateOrderResponse extends BaseAbstractResponse
 
         return $data;
     }
+	
+	public function getErrMsg()
+	{
+		$data = $this->getData();
+		$err_msg = $data['err_msg'];
+		return $err_msg;
+	}
 }
