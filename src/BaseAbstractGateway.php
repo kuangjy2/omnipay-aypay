@@ -35,23 +35,9 @@ abstract class BaseAbstractGateway extends AbstractGateway
         return $this->getParameter('mch_id');
     }
 
-
-    public function setNotifyUrl($url)
-    {
-        $this->setParameter('notify_url', $url);
-    }
-
-
-    public function getNotifyUrl()
-    {
-        return $this->getParameter('notify_url');
-    }
-
-
     /**
      * @param array $parameters
-     *
-     * @return \Omnipay\AyPay\Message\CreateOrderRequest
+     * @return \Omnipay\Common\Message\AbstractRequest
      */
     public function purchase($parameters = array())
     {
@@ -62,8 +48,7 @@ abstract class BaseAbstractGateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     *
-     * @return \Omnipay\AyPay\Message\CompletePurchaseRequest
+     * @return \Omnipay\Common\Message\AbstractRequest
      */
     public function completePurchase($parameters = array())
     {

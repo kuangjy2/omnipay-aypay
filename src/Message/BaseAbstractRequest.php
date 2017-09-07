@@ -20,7 +20,7 @@ abstract class BaseAbstractRequest extends AbstractRequest
 
 
     /**
-     * @param mixed $apiKey
+     * @param string $mchKey
      */
     public function setMchKey($mchKey)
     {
@@ -38,7 +38,7 @@ abstract class BaseAbstractRequest extends AbstractRequest
 
 
     /**
-     * @param mixed $mchId
+     * @param string $mchId
      */
     public function setMchId($mchId)
     {

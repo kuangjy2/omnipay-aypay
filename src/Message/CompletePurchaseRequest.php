@@ -9,7 +9,6 @@ use Omnipay\AyPay\Helper;
  *
  * Class CompletePurchaseRequest
  * @package Omnipay\AyPay\Message
- * @link    https://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=9_7&index=3
  * @method CompletePurchaseResponse send()
  */
 class CompletePurchaseRequest extends BaseAbstractRequest
@@ -45,6 +44,8 @@ class CompletePurchaseRequest extends BaseAbstractRequest
         } else {
             $responseData['paid'] = false;
         }
+        $responseData = array_merge($data, $responseData);
+
         return $this->response = new CompletePurchaseResponse($this, $responseData);
     }
 

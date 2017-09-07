@@ -7,8 +7,7 @@ use Omnipay\AyPay\Helper;
 
 /**
  * Class CreateOrderRequest
- * @package Omnipay\WechatPay\Message
- * @link    https://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=9_1
+ * @package Omnipay\AyPay\Message
  * @method CreateOrderResponse send()
  */
 class CreateOrderRequest extends BaseAbstractRequest
@@ -26,13 +25,13 @@ class CreateOrderRequest extends BaseAbstractRequest
     public function getData()
     {
         $this->validate(
-            'mch_id',
-            'body',
-            'out_trade_no',
-            'total_fee',
-            'notify_url',
             'service',
-            'mch_create_ip'
+            'mch_id',
+            'out_trade_no',
+            'body',
+            'total_fee',
+            'mch_create_ip',
+            'notify_url'
         );
 
         $service = strtoupper($this->getService());
@@ -42,21 +41,25 @@ class CreateOrderRequest extends BaseAbstractRequest
         }
 
         $data = array(
-            'service' => $this->getService(), //*
-            'version' => '1.0',
-            'charset' => 'utf-8',
+            'service' => $this->getService(),
+            'version' => '2.0',
+            'charset' => 'UTF-8',
             'sign_type' => 'MD5',
             'mch_id' => $this->getMchId(),
-            'out_trade_no' => $this->getOutTradeNo(),//*
+            'out_trade_no' => $this->getOutTradeNo(),
             'device_info' => $this->getDeviceInfo(),
-            'body' => $this->getBody(),//*
-            'sub_openid' => $this->getOpenId(),//*(service=JSAPI)
+            'body' => $this->getBody(),
+            'sub_openid' => $this->getOpenId(),
             'attach' => $this->getAttach(),
-            'total_fee' => $this->getTotalFee(),//*
-            'mch_create_ip' => $this->getMchCreateIp(),//*
-            'notify_url' => $this->getNotifyUrl(), //*
-            'callback_url' => $this->getCallbackUrl(), //*
-            'nonce_str' => md5(uniqid()),//*
+            'total_fee' => $this->getTotalFee(),
+            'mch_create_ip' => $this->getMchCreateIp(),
+            'notify_url' => $this->getNotifyUrl(),
+            'callback_url' => $this->getCallbackUrl(),
+            'time_start' => $this->getTimeStart(),
+            'time_expire' => $this->getTimeExpire(),
+            'goods_tag' => $this->getGoodsTag(),
+            'auth_code' => $this->getAuthCode(),
+            'nonce_str' => md5(uniqid()),
         );
 
         $data = array_filter($data);
@@ -75,6 +78,9 @@ class CreateOrderRequest extends BaseAbstractRequest
         return $this->getParameter('service');
     }
 
+    /**
+     * @return mixed
+     */
     public function getCallbackUrl()
     {
         return $this->getParameter('callback_url');
@@ -144,6 +150,37 @@ class CreateOrderRequest extends BaseAbstractRequest
         return $this->getParameter('open_id');
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTimeStart()
+    {
+        return $this->getParameter('time_start');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimeExpire()
+    {
+        return $this->getParameter('time_expire');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoodsTag()
+    {
+        return $this->getParameter('goods_tag');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthCode()
+    {
+        return $this->getParameter('auth_code');
+    }
 
     /**
      * @param mixed $body
@@ -154,7 +191,7 @@ class CreateOrderRequest extends BaseAbstractRequest
     }
 
     /**
-     * @param mixed $attach
+     * @param mixed $deviceInfo
      */
     public function setDeviceInfo($deviceInfo)
     {
@@ -169,7 +206,6 @@ class CreateOrderRequest extends BaseAbstractRequest
         $this->setParameter('attach', $attach);
     }
 
-
     /**
      * @param mixed $outTradeNo
      */
@@ -177,7 +213,6 @@ class CreateOrderRequest extends BaseAbstractRequest
     {
         $this->setParameter('out_trade_no', $outTradeNo);
     }
-
 
     /**
      * @param mixed $totalFee
@@ -187,9 +222,8 @@ class CreateOrderRequest extends BaseAbstractRequest
         $this->setParameter('total_fee', $totalFee);
     }
 
-
     /**
-     * @param mixed $spbillCreateIp
+     * @param mixed $mchCreateIp
      */
     public function setMchCreateIp($mchCreateIp)
     {
@@ -204,11 +238,18 @@ class CreateOrderRequest extends BaseAbstractRequest
         $this->setParameter('service', $service);
     }
 
+    /**
+     * @param string $notifyUrl
+     * @return mixed
+     */
     public function setNotifyUrl($notifyUrl)
     {
         $this->setParameter('notify_url', $notifyUrl);
     }
 
+    /**
+     * @param string $callbackUrl
+     */
     public function setCallbackUrl($callbackUrl)
     {
         $this->setParameter('callback_url', $callbackUrl);
@@ -220,6 +261,38 @@ class CreateOrderRequest extends BaseAbstractRequest
     public function setOpenId($openId)
     {
         $this->setParameter('open_id', $openId);
+    }
+
+    /**
+     * @param string $timeStart
+     */
+    public function setTimeStart($timeStart)
+    {
+        $this->setParameter('time_start', $timeStart);
+    }
+
+    /**
+     * @param string $timeExpire
+     */
+    public function setTimeExpire($timeExpire)
+    {
+        $this->setParameter('time_expire', $timeExpire);
+    }
+
+    /**
+     * @param string $goodsTag
+     */
+    public function setGoodsTag($goodsTag)
+    {
+        $this->setParameter('goods_tag', $goodsTag);
+    }
+
+    /**
+     * @param string $authCode
+     */
+    public function setAuthCode($authCode)
+    {
+        $this->setParameter('auth_code', $authCode);
     }
 
 
@@ -234,9 +307,8 @@ class CreateOrderRequest extends BaseAbstractRequest
     {
         $request = $this->httpClient->post($this->endpoint)->setBody(Helper::array2xml($data));
         $response = $request->send()->getBody();
-
         $responseData = Helper::xml2array($response);
-        //var_dump($responseData);die;
+        
         return $this->response = new CreateOrderResponse($this, $responseData);
     }
 }

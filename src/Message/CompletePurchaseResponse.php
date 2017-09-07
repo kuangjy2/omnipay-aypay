@@ -7,7 +7,6 @@ use Omnipay\Common\Message\AbstractResponse;
 /**
  * Class CompletePurchaseResponse
  * @package Omnipay\AyPay\Message
- * @link    https://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=9_1
  *
  */
 class CompletePurchaseResponse extends AbstractResponse
