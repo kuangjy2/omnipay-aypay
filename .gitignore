@@ -8,5 +8,5 @@ themes/classic/views/
 /vendor/
 
 .idea
-
+phpunit.phar
 composer.lock
