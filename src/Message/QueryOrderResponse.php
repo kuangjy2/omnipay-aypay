@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 
 class QueryOrderResponse extends BaseAbstractResponse

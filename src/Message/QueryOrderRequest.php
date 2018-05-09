@@ -1,15 +1,15 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\ResponseInterface;
-use Omnipay\AyPay\Helper;
+use Omnipay\SwiftPass\Helper;
 
 class QueryOrderRequest extends BaseAbstractRequest
 {
 
-    protected $endpoint = 'https://vip.iyibank.com/pay/orderquery';
+    protected $endpoint = 'https://pay.swiftpass.cn/pay/gateway';
 
 
     /**
@@ -28,7 +28,8 @@ class QueryOrderRequest extends BaseAbstractRequest
         }
 
         $data = array(
-            'version' => '1.0',
+            'service'=>'unified.trade.query',
+            'version' => '2.0',
             'charset' => 'UTF-8',
             'sign_type' => 'MD5',
             'mch_id' => $this->getMchId(),

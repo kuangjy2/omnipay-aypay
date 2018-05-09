@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\AyPay;
+namespace Omnipay\SwiftPass;
 
 use Omnipay\Common\AbstractGateway;
 
@@ -63,7 +63,7 @@ abstract class BaseAbstractGateway extends AbstractGateway
     {
         $parameters['service'] = $this->getService();
 
-        return $this->createRequest('\Omnipay\AyPay\Message\CreateOrderRequest', $parameters);
+        return $this->createRequest('\Omnipay\SwiftPass\Message\CreateOrderRequest', $parameters);
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class BaseAbstractGateway extends AbstractGateway
      */
     public function completePurchase($parameters = array())
     {
-        return $this->createRequest('\Omnipay\AyPay\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\SwiftPass\Message\CompletePurchaseRequest', $parameters);
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class BaseAbstractGateway extends AbstractGateway
      */
     public function query($parameters = array ())
     {
-        return $this->createRequest('\Omnipay\AyPay\Message\QueryOrderRequest', $parameters);
+        return $this->createRequest('\Omnipay\SwiftPass\Message\QueryOrderRequest', $parameters);
     }
 
 }

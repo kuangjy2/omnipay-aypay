@@ -1,1 +1,1 @@
-# omnipay-aypay
+# omnipay-swiftpass

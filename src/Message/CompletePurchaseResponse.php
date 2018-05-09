@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Class CompletePurchaseResponse
- * @package Omnipay\AyPay\Message
+ * @package Omnipay\SwiftPass\Message
  *
  */
 class CompletePurchaseResponse extends AbstractResponse

@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
-use Omnipay\AyPay\Helper;
+use Omnipay\SwiftPass\Helper;
 
 /**
  *
  * Class CompletePurchaseRequest
- * @package Omnipay\AyPay\Message
+ * @package Omnipay\SwiftPass\Message
  * @method CompletePurchaseResponse send()
  */
 class CompletePurchaseRequest extends BaseAbstractRequest
@@ -39,7 +39,7 @@ class CompletePurchaseRequest extends BaseAbstractRequest
             $responseData['sign_match'] = false;
         }
 
-        if ($responseData['sign_match'] && isset($data['result_code']) && $data['result_code'] == '0') {
+        if ($responseData['sign_match'] && isset($data['status']) && $data['status'] == '0' && isset($data['result_code']) && $data['result_code'] == '0') {
             $responseData['paid'] = true;
         } else {
             $responseData['paid'] = false;

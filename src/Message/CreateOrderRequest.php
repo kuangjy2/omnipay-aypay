@@ -1,26 +1,27 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
-use Omnipay\AyPay\Helper;
+use Omnipay\SwiftPass\Helper;
 
 /**
  * Class CreateOrderRequest
- * @package Omnipay\AyPay\Message
+ * @package Omnipay\SwiftPass\Message
  * @method CreateOrderResponse send()
  */
 class CreateOrderRequest extends BaseAbstractRequest
 {
 
-    protected $endpoint = 'https://vip.iyibank.com/pay/gateway';
+    protected $endpoint = 'https://pay.swiftpass.cn/pay/gateway';
 
 
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
      *
-     * @return mixed
+     * @return array|mixed
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {
@@ -36,8 +37,9 @@ class CreateOrderRequest extends BaseAbstractRequest
 
         $service = strtoupper($this->getService());
 
-        if ($service == 'cibwxh5' || $service == 'citiwxh5') {
+        if (!strcasecmp($service, 'pay.weixin.jspay')) {
             $this->validate('open_id');
+            $this->validate('app_id');
         }
 
         $data = array(
@@ -49,18 +51,21 @@ class CreateOrderRequest extends BaseAbstractRequest
             'out_trade_no' => $this->getOutTradeNo(),
             'device_info' => $this->getDeviceInfo(),
             'body' => $this->getBody(),
-            'sub_openid' => $this->getOpenId(),
             'attach' => $this->getAttach(),
             'total_fee' => $this->getTotalFee(),
             'mch_create_ip' => $this->getMchCreateIp(),
             'notify_url' => $this->getNotifyUrl(),
-            'callback_url' => $this->getCallbackUrl(),
             'time_start' => $this->getTimeStart(),
             'time_expire' => $this->getTimeExpire(),
             'goods_tag' => $this->getGoodsTag(),
-            'auth_code' => $this->getAuthCode(),
+            'limit_credit_pay' => $this->getLimitCreditPay(),
             'nonce_str' => md5(uniqid()),
         );
+        if (!strcasecmp($service, 'pay.weixin.jspay')) {
+            $data['is_raw'] = '1';
+            $data['sub_openid'] = $this->getOpenId();
+            $data['sub_appid'] = $this->getAppId();
+        }
 
         $data = array_filter($data);
 
@@ -76,14 +81,6 @@ class CreateOrderRequest extends BaseAbstractRequest
     public function getService()
     {
         return $this->getParameter('service');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCallbackUrl()
-    {
-        return $this->getParameter('callback_url');
     }
 
     /**
@@ -153,6 +150,14 @@ class CreateOrderRequest extends BaseAbstractRequest
     /**
      * @return mixed
      */
+    public function getAppId()
+    {
+        return $this->getParameter('app_id');
+    }
+
+    /**
+     * @return mixed
+     */
     public function getTimeStart()
     {
         return $this->getParameter('time_start');
@@ -177,9 +182,9 @@ class CreateOrderRequest extends BaseAbstractRequest
     /**
      * @return mixed
      */
-    public function getAuthCode()
+    public function getLimitCreditPay()
     {
-        return $this->getParameter('auth_code');
+        return $this->getParameter('limit_credit_pay');
     }
 
     /**
@@ -240,19 +245,10 @@ class CreateOrderRequest extends BaseAbstractRequest
 
     /**
      * @param string $notifyUrl
-     * @return mixed
      */
     public function setNotifyUrl($notifyUrl)
     {
         $this->setParameter('notify_url', $notifyUrl);
-    }
-
-    /**
-     * @param string $callbackUrl
-     */
-    public function setCallbackUrl($callbackUrl)
-    {
-        $this->setParameter('callback_url', $callbackUrl);
     }
 
     /**
@@ -261,6 +257,14 @@ class CreateOrderRequest extends BaseAbstractRequest
     public function setOpenId($openId)
     {
         $this->setParameter('open_id', $openId);
+    }
+
+    /**
+     * @param mixed $appId
+     */
+    public function setAppId($appId)
+    {
+        $this->setParameter('app_id', $appId);
     }
 
     /**
@@ -288,11 +292,11 @@ class CreateOrderRequest extends BaseAbstractRequest
     }
 
     /**
-     * @param string $authCode
+     * @param string $limitCreditPay
      */
-    public function setAuthCode($authCode)
+    public function setLimitCreditPay($limitCreditPay)
     {
-        $this->setParameter('auth_code', $authCode);
+        $this->setParameter('limit_credit_pay', $limitCreditPay);
     }
 
 
@@ -308,7 +312,7 @@ class CreateOrderRequest extends BaseAbstractRequest
         $request = $this->httpClient->post($this->endpoint)->setBody(Helper::array2xml($data));
         $response = $request->send()->getBody();
         $responseData = Helper::xml2array($response);
-        
+
         return $this->response = new CreateOrderResponse($this, $responseData);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Omnipay\AyPay\Message;
+namespace Omnipay\SwiftPass\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Class BaseAbstractResponse
- * @package Omnipay\WechatPay\Message
+ * @package Omnipay\SwiftPass\Message
  */
 abstract class BaseAbstractResponse extends AbstractResponse
 {
@@ -20,6 +20,6 @@ abstract class BaseAbstractResponse extends AbstractResponse
     {
         $data = $this->getData();
 
-        return isset($data['result_code']) && $data['result_code'] == '0' && isset($data['err_msg']) && $data['err_msg'] == 'ok';
+        return isset($data['status']) && $data['status'] == '0' && isset($data['result_code']) && $data['result_code'] == '0';
     }
 }

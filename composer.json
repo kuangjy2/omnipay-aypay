@@ -1,6 +1,6 @@
 {
-    "name": "ldtech/omnipay-aypay",
-    "description": "omnipay-aypay",
+    "name": "kuangjy/omnipay-swiftpass",
+    "description": "omnipay-swiftpass",
     "type": "library",
     "require": {
         "omnipay/common": "~2.0"
@@ -11,13 +11,13 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "kuangjy2",
+            "name": "Kuang Jiaye",
             "email": "kuangjy@qq.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Omnipay\\AyPay\\": "src/"
+            "Omnipay\\SwiftPass\\": "src/"
         }
     }
 }

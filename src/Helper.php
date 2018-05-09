@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\AyPay;
+namespace Omnipay\SwiftPass;
 
 class Helper
 {

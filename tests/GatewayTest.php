@@ -1,11 +1,12 @@
 <?php
 
-namespace Omnipay\AyPay;
+namespace Omnipay\SwiftPass;
 
 use Omnipay\Omnipay;
 use Omnipay\Tests\GatewayTestCase;
-use Omnipay\AyPay\Message\CreateOrderResponse;
-use Omnipay\AyPay\Message\CompletePurchaseResponse;
+use Omnipay\SwiftPass\Message\CreateOrderResponse;
+use Omnipay\SwiftPass\Message\CompletePurchaseResponse;
+use Omnipay\SwiftPass\Message\QueryOrderResponse;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -20,12 +21,10 @@ class GatewayTest extends GatewayTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->gateway = Omnipay::create('AyPay_Cibweixin');
-        $this->gateway->setMchId('10024');
-        $this->gateway->setMchKey('6929b166930c48c09fd88dfd17006dcd');
+        $this->gateway = Omnipay::create('SwiftPass');
+        $this->gateway->setMchId('mchid');
+        $this->gateway->setMchKey('mchkey');
     }
-
-
 
     public function testCompletePurchase()
     {
@@ -33,7 +32,7 @@ class GatewayTest extends GatewayTestCase
             'request_params' => array (
                 'appid'       => '123456',
                 'mch_id'      => '789456',
-                'result_code' => 'SUCCESS'
+                'result_code' => '0'
             ),
         );
 
@@ -44,11 +43,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-
     public function testQuery()
     {
         $options = array (
-            'transaction_id' => '3474813271258769001041842579301293446',
+            'transaction_id' => 'transaction_id',
         );
 
         /**
