@@ -13,13 +13,11 @@ class Helper
     public static function array2xml($arr, $root = 'xml')
     {
         $xml = "<$root>";
-        foreach ($arr as $k => $v) {
-            if ($v != null) {
-                if ($k == 'body') {
-                    $xml .= '<body>' . $v . '</body>';
-                } else {
-                    $xml .= '<' . $k . '>' . $v . '</' . $k . '>';
-                }
+        foreach ($arr as $key => $val) {
+            if (is_numeric($val)) {
+                $xml .= "<" . $key . ">" . $val . "</" . $key . ">";
+            } else {
+                $xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
             }
         }
         $xml .= "</$root>";
