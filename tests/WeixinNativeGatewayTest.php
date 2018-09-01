@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\SwiftPass;
+namespace Omnipay\SwiftPass\Tests;
 
 use Omnipay\Omnipay;
 use Omnipay\Tests\GatewayTestCase;
